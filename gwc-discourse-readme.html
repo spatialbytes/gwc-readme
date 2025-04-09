@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GWC Administrator Guide</title>
+    <style>
+        :root {
+            --primary: #e05c30;
+            --secondary: #2c3e50;
+            --accent: #3498db;
+            --light: #ecf0f1;
+            --dark: #34495e;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            padding-bottom: 3rem;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--secondary), var(--dark));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo {
+            height: 80px;
+            margin-right: 20px;
+            border-radius: 50%;
+            background: transparent;
+        }
+
+        .header-text {
+            text-align: left;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin: 2.5rem 0 1rem 0;
+            color: var(--primary);
+            border-bottom: 2px solid var(--light);
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            margin: 1.5rem 0 0.75rem 0;
+            color: var(--secondary);
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+            margin-top: -3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .description {
+            background-color: var(--light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            margin: 1.5rem 0;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .alert-icon {
+            margin-right: 0.75rem;
+            font-size: 1.5rem;
+        }
+
+        .alert-info {
+            background-color: rgba(52, 152, 219, 0.1);
+            border-left: 4px solid var(--accent);
+            color: var(--accent);
+        }
+
+        .alert-warning {
+            background-color: rgba(243, 156, 18, 0.1);
+            border-left: 4px solid var(--warning);
+            color: var(--warning);
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: var(--secondary);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px 8px 0 0;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .steps {
+            list-style-type: none;
+            counter-reset: step-counter;
+            margin: 1.5rem 0;
+        }
+
+        .steps li {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1.5rem;
+            counter-increment: step-counter;
+        }
+
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: var(--primary);
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .img-container {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .img-container img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .img-container img:hover {
+            transform: scale(1.02);
+        }
+
+        .header-img {
+            max-width: 40%;
+        }
+
+        .caption {
+            font-size: 0.9rem;
+            color: var(--dark);
+            margin-top: 0.75rem;
+            font-style: italic;
+        }
+
+        /* Modal styles for enlarged images */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            padding-top: 50px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+            cursor: pointer;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+            cursor: default;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            z-index: 1001;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+        }
+
+        @keyframes zoom {
+            from {
+                transform: scale(0)
+            }
+
+            to {
+                transform: scale(1)
+            }
+        }
+
+        .modal-content {
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--secondary);
+            color: white;
+            margin-top: 2rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        .badge-admin {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .badge-mod {
+            background-color: var(--warning);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .steps li {
+                padding-left: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <img src="https://picsur.spatialbytes.work/i/fcbcd55f-1211-48cb-9f5f-8aa1ba813f90.jpg" alt="GWC Logo"
+                class="logo" onclick="openModal(this.src)">
+            <div class="header-text">
+                <h1>Global Wildfire Collective</h1>
+                <p>Administrator Guide for Discourse Platform</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="description">
+            <p>The <a href="https://globalwildfirecollective.org" target="_blank">Global Wildfire Collective (GWC)</a>
+                is an interdisciplinary community dedicated to wildfire resilience, recovery, and long-term well-being
+                across ecological and social systems. Led by the Conservation Biology Institute, our work spans sectors,
+                disciplines, and stakeholders to address the complex impacts of wildfire. We collaborate to develop
+                strategies that not only mitigate wildfire risks but also create co-benefits for people and the planet.
+                Whether you're a researcher, practitioner, policymaker, or community member this is a space to share
+                knowledge, build capacity, and drive innovation in wildfire resilience.</p>
+        </div>
+
+        <div class="alert alert-info">
+            <span class="alert-icon">ℹ️</span>
+            <div>
+                <strong>Important:</strong> This guide is intended for administrators and moderators of the GWC
+                Discourse forum. All operations described here require appropriate permissions.
+            </div>
+        </div>
+
+        <div class="img-container">
+            <img src="https://picsur.spatialbytes.work/i/13d277c5-8369-4579-a364-41cf9a604f31.jpg"
+                alt="Global Wildfire Collective" onclick="openModal(this.src)" class="header-img"
+                style="max-width: 70%;">
+            <p class="caption">The Global Wildfire Collective brings together interdisciplinary perspectives on wildfire
+                resilience.</p>
+        </div>
+
+        <section class="section">
+            <h2>Admin Panel Navigation</h2>
+
+            <p>The administrator panel is where you can manage all settings for the Discourse server. Only users with
+                <span class="badge badge-admin">admin</span> permissions can access this section.</p>
+
+            <div class="card">
+                <div class="card-header">Accessing Admin Panel</div>
+                <div class="card-body">
+                    <ol class="steps">
+                        <li>Log in to your account at <a
+                                href="https://community.globalwildfirecollective.org">community.globalwildfirecollective.org</a>
+                        </li>
+                        <li>Click on your profile icon in the top-right corner</li>
+                        <li>Select "Admin" from the dropdown menu</li>
+                        <li>You will be taken to the main admin dashboard</li>
+                    </ol>
+
+                    <div class="img-container">
+                        <img src="https://picsur.spatialbytes.work/i/ff1d24f0-e9db-4e7d-839b-b86056cb8fdc.gif"
+                            alt="Admin Panel Navigation" onclick="openModal(this.src)">
+                        <p class="caption">Navigating to the Admin Panel</p>
+                    </div>
+
+                    <div class="alert alert-warning">
+                        <span class="alert-icon">⚠️</span>
+                        <div>
+                            <strong>Caution:</strong> Changes made in the admin panel affect the entire community.
+                            Proceed with care and consider testing significant changes in a staging environment first.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Updating Discourse Settings</h2>
+
+            <p>Discourse comes with many configurable settings that allow you to customize the forum experience. Users
+                with <span class="badge badge-admin">admin</span> permissions can modify these settings.</p>
+
+            <div class="card">
+                <div class="card-header">Updating System Settings</div>
+                <div class="card-body">
+                    <ol class="steps">
+                        <li>From the Admin Panel, click on the "Settings" tab in the left sidebar</li>
+                        <li>Use the filter at the top to search for specific settings</li>
+                        <li>Modify settings by toggling switches or entering new values</li>
+                        <li>Changes are saved automatically</li>
+                    </ol>
+
+                    <div class="img-container">
+                        <img src="https://picsur.spatialbytes.work/i/f3c7ca4e-5726-407c-8711-0a3b53b0e2fe.gif"
+                            alt="Updating Discourse Settings" onclick="openModal(this.src)">
+                        <p class="caption">Navigating and updating Discourse settings</p>
+                    </div>
+
+                    <h3>Current Important Settings</h3>
+                    <ul>
+                        <li><strong>Email notification digests:</strong> Currently set to 7 days</li>
+                        <li><strong>Backend storage:</strong> Currently enabled (can be changed to S3 bucket in the
+                            future)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>User Management</h2>
+
+            <p>Managing users is a core responsibility for administrators and moderators. Users with <span
+                    class="badge badge-admin">admin</span> or <span class="badge badge-mod">moderator</span> permissions
+                can perform user management tasks.</p>
+
+            <div class="card">
+                <div class="card-header">Managing Users</div>
+                <div class="card-body">
+                    <ol class="steps">
+                        <li>From the Admin Panel, click on the "Users" tab in the left sidebar</li>
+                        <li>Use the search and filter options to find specific users</li>
+                        <li>Click on a username to view detailed information and management options</li>
+                        <li>Perform actions such as:
+                            <ul>
+                                <li>Changing user trust levels</li>
+                                <li>Assigning moderator or admin privileges</li>
+                                <li>Suspending accounts</li>
+                                <li>Managing user groups</li>
+                            </ul>
+                        </li>
+                    </ol>
+
+                    <div class="img-container">
+                        <img src="https://picsur.spatialbytes.work/i/abe84a41-084a-4b3d-8913-a14bc916513c.gif"
+                            alt="User Management" onclick="openModal(this.src)">
+                        <p class="caption">Navigating to user sections and management options</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Report Generation</h2>
+
+            <p>Discourse provides powerful analytics and reporting tools to help administrators understand community
+                engagement and activity. Only users with <span class="badge badge-admin">admin</span> permissions can
+                access these reports.</p>
+
+            <div class="card">
+                <div class="card-header">Accessing and Using Reports</div>
+                <div class="card-body">
+                    <ol class="steps">
+                        <li>From the Admin Panel, click on the "Reports" tab in the left sidebar</li>
+                        <li>Select the type of report you wish to view (Activity, Engagement, Moderation, etc.)</li>
+                        <li>Use the date range selectors to adjust the time period</li>
+                        <li>Export reports as CSV files for further analysis if needed</li>
+                    </ol>
+
+                    <div class="img-container">
+                        <img src="https://picsur.spatialbytes.work/i/46bee2a0-d78f-4e33-bde9-80c531a28efd.gif"
+                            alt="Reports Generation" onclick="openModal(this.src)">
+                        <p class="caption">Navigating to and generating reports in Discourse</p>
+                    </div>
+
+                    <h3>Valuable Report Types</h3>
+                    <ul>
+                        <li><strong>User Activity:</strong> Track new signups, active users, and engagement levels</li>
+                        <li><strong>Content Metrics:</strong> Monitor topics, posts, and views across different
+                            categories</li>
+                        <li><strong>Engagement:</strong> Analyze likes, replies, and time spent on the platform</li>
+                        <li><strong>Moderation:</strong> Track flags, suspensions, and other moderation actions</li>
+                    </ul>
+
+                    <div class="alert alert-info">
+                        <span class="alert-icon">ℹ️</span>
+                        <div>
+                            <strong>Tip:</strong> Regular report analysis can help identify content trends and community
+                            health indicators. Consider scheduling a monthly review of key metrics.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Permission Levels Overview</h2>
+
+            <p>Discourse has several built-in user levels with different capabilities:</p>
+
+            <div class="card">
+                <div class="card-header">User Levels</div>
+                <div class="card-body">
+                    <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0;">
+                        <thead>
+                            <tr style="background-color: var(--light);">
+                                <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid #ddd;">Level
+                                </th>
+                                <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid #ddd;">
+                                    Capabilities</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid #ddd;"><span
+                                        class="badge badge-admin">Admin</span></td>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid #ddd;">Full access to all
+                                    settings, user management, site customization, and plugin configuration</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid #ddd;"><span
+                                        class="badge badge-mod">Moderator</span></td>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid #ddd;">Can manage posts and users,
+                                    handle flags, but cannot change site settings or access server configuration</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid #ddd;">Trust Level 4</td>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid #ddd;">Leader users with expanded
+                                    capabilities but no moderation powers</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid #ddd;">Trust Level 3</td>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid #ddd;">Regular users with
+                                    additional privileges</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid #ddd;">Trust Level 2</td>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid #ddd;">Members who have
+                                    participated more actively</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid #ddd;">Trust Level 1</td>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid #ddd;">Basic users who have read
+                                    multiple posts</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid #ddd;">Trust Level 0</td>
+                                <td style="padding: 0.75rem; border-bottom: 1px solid #ddd;">New users with limited
+                                    capabilities</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Global Wildfire Collective Administrator Guide | &copy; 2025 Conservation Biology Institute</p>
+            <p><small>For questions or support, contact the GWC technical team.</small></p>
+        </footer>
+    </div>
+
+    <!-- Modal for enlarged images -->
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="close" onclick="event.stopPropagation(); closeModal()">&times;</span>
+        <img class="modal-content" id="enlargedImg" onclick="event.stopPropagation()">
+    </div>
+
+    <script>
+        // Modal functionality
+        function openModal(imgSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('enlargedImg');
+            modal.style.display = "block";
+            modalImg.src = imgSrc;
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = "none";
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function (event) {
+            if (event.key === "Escape") {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+
+</html>
